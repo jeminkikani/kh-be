@@ -9,7 +9,7 @@ const app = express();
 app.use(express.json());
 
 // MongoDB connection string
-const mongoURI = process.env.MONGO_URI || 'mongodb+srv://evoque842:Jemin%409510@cluster0.s7xgrlh.mongodb.net/KHODAL?retryWrites=true&w=majority';
+const mongoURI = process.env.MONGO_URI;
 
 app.use(cors({
   origin: 'http://localhost:3000',
