@@ -1,6 +1,6 @@
 const express = require('express');
 const stockRouter = express.Router();
-const stockController = require('../controllers/stock.controller.js');
+const stockController = require('../controllers/sale_stock.controller.js');
 
 // Add new stock
 stockRouter.post('/add-stock', stockController.addStock);

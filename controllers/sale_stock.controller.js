@@ -1,17 +1,16 @@
-const Stock = require('../models/stock.model');
+const Stock_sale = require('../models/sale_stock.model');
 
 // Add new stock
 exports.addStock = async (req, res) => {
     try {
-        const { date, shop_name, opening_stock, sold_by, sale_Qty, closing_stock, total_sale } = req.body;
-        const newStock = new Stock({
+        const { date, shop_name, opening_stock, sold_by, sale_Qty, closing_stock } = req.body;
+        const newStock = new Stock_sale({
             date,
             shop_name,
             opening_stock,
             sold_by,
             sale_Qty,
-            closing_stock,
-            total_sale
+            closing_stock
         });
 
         const savedStock = await newStock.save();
@@ -24,8 +23,27 @@ exports.addStock = async (req, res) => {
 // Get all stocks (excluding soft-deleted)
 exports.getStocks = async (req, res) => {
     try {
-        const stocks = await Stock.find({ deleted: { $ne: true } });
-        res.status(200).json(stocks);
+        const stocks = await Stock_sale.aggregate([
+            {
+                $match: { is_deleted: { $ne: true } }
+            },
+            {
+                $lookup: {
+                    from: 'shops',           // name of the collection to join
+                    localField: 'sold_by',   // field in Stock_sale
+                    foreignField: '_id',     // field in shops
+                    as: 'sold_by_info'       // output array field
+                }
+            },
+            {
+                $unwind: '$sold_by_info'  // optional: if you want a single object instead of an array
+            }
+        ]);
+
+        res.status(200).json({
+            message: 'data retrieve success',
+            data: stocks
+        });
     } catch (err) {
         res.status(500).json({ error: err.message });
     }
@@ -35,9 +53,9 @@ exports.getStocks = async (req, res) => {
 exports.deleteStock = async (req, res) => {
     try {
         const { id } = req.params;
-        const updatedStock = await Stock.findByIdAndUpdate(
+        const updatedStock = await Stock_sale.findByIdAndUpdate(
             id,
-            { $set: { deleted: true } },
+            { $set: { is_deleted: true } },
             { new: true }
         );
         if (!updatedStock) {
@@ -54,7 +72,7 @@ exports.updateStock = async (req, res) => {
     try {
         const { id } = req.params;
         const updateData = req.body;
-        const updatedStock = await Stock.findByIdAndUpdate(
+        const updatedStock = await Stock_sale.findByIdAndUpdate(
             id,
             { $set: updateData },
             { new: true }
@@ -67,4 +85,3 @@ exports.updateStock = async (req, res) => {
         res.status(500).json({ error: err.message });
     }
 };
-

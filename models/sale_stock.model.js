@@ -14,7 +14,8 @@ const stockSchema = new mongoose.Schema({
         required: true
     },
     sold_by: {
-        type: String,
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'shops',
         required: true
     },
     sale_Qty: {
@@ -25,16 +26,12 @@ const stockSchema = new mongoose.Schema({
         type: Number,
         required: true
     },
-    total_sale: {
-        type: Number,
-        required: true
-    },
     is_deleted: {
         type: Boolean,
         default: false
     }
 }, { timestamps: true });
 
-const stock_management = mongoose.model('stock_management', stockSchema);
+const sale_stock = mongoose.model('sale_stock', stockSchema);
 
-module.exports = stock_management;
+module.exports = sale_stock;
