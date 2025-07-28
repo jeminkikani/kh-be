@@ -3,14 +3,15 @@ const Stock_sale = require('../models/sale_stock.model');
 // Add new stock
 exports.addStock = async (req, res) => {
     try {
-        const { date, shop_name, opening_stock, sold_by, sale_Qty, closing_stock } = req.body;
+        const { date, opening_stock, sold_by, sale_Qty, closing_stock_18kt, closing_stock_24kt, conversion_rate } = req.body;
         const newStock = new Stock_sale({
             date,
-            shop_name,
             opening_stock,
             sold_by,
             sale_Qty,
-            closing_stock
+            closing_stock_18kt,
+            closing_stock_24kt,
+            conversion_rate
         });
 
         const savedStock = await newStock.save();

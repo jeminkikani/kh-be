@@ -6,7 +6,7 @@ const stockSchema = new mongoose.Schema(
       type: Date,
       required: true,
     },
-    sold_by: {
+    add_by: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "shops",
       required: true,
@@ -20,10 +20,6 @@ const stockSchema = new mongoose.Schema(
       required: true,
     },
     sale_Qty: {
-      type: Number,
-      required: true,
-    },
-    conversion_rate: {
       type: Number,
       required: true,
     },
@@ -43,6 +39,6 @@ const stockSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-const sale_stock = mongoose.model("sale_stock", stockSchema);
+const add_stock = mongoose.model("add_stock", stockSchema);
 
-module.exports = sale_stock;
+module.exports = add_stock;

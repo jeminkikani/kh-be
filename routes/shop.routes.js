@@ -4,7 +4,7 @@ const shopController = require('../controllers/shop.controller.js');
 
 
 // login user
-shopRouter.post()
+// shopRouter.post()
 
 // Add new stock
 shopRouter.post('/add-shop', shopController.addShop);
