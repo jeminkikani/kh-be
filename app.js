@@ -18,10 +18,22 @@ app.use(express.json());
 // MongoDB connection string
 const mongoURI = process.env.MONGO_URI;
 
-app.use(cors({
-  origin: 'http://localhost:3000',
-  credentials: true
-}));
+const allowedOrigins = [
+    'http://localhost:3000',
+    'https://kh-fe.vercel.app',
+    'https://kh-be.onrender.com'
+  ];
+  
+  app.use(cors({
+    origin: function (origin, callback) {
+      if (!origin || allowedOrigins.includes(origin)) {
+        callback(null, true);
+      } else {
+        callback(new Error('Not allowed by CORS'));
+      }
+    },
+    credentials: true // if you send cookies or auth headers
+  }));
 
 mongoose.connect(mongoURI, {
     // useNewUrlParser: true,
