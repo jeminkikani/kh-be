@@ -22,7 +22,7 @@ exports.addCompanyStock = async (req, res) => {
 
 exports.getCompanyStock = async (req, res) => {
   try {
-    const companyStock = await AddCompanyStock.find({ is_deleted: false });
+    const companyStock = await AddCompanyStock.find({ is_deleted: false }).populate("company_id");
     res.status(200).json({ companyStock });
   } catch (error) {
     res

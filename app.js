@@ -8,6 +8,8 @@ const companyRouter = require('./routes/company.routes');
 const AddCompanyStockRouter = require('./routes/add_company_stock.routes');
 const SaleCompanyStockRouter = require('./routes/sale_company_stock.routes');
 const dashboardRouter = require('./routes/dashboard.routes');
+const homeStockRouter = require('./routes/home_stock.routes');
+const addStockRouter = require('./routes/add_stock.routes');
 const app = express();
 
 // Middleware to parse JSON
@@ -39,11 +41,13 @@ app.get('/', (req, res) => {
 
 // Stock routes
 app.use('/api/stocks', stockRouter);
+app.use('/api/add-stock', addStockRouter);
 app.use('/api/shops', shopRouter);
 app.use('/api/companies', companyRouter);
 app.use('/api/add-company-stock', AddCompanyStockRouter);
 app.use('/api/sale-company-stock', SaleCompanyStockRouter);
 app.use('/api/dashboard', dashboardRouter);
+app.use('/api/home-stock', homeStockRouter);
 
 // Start the server
 const PORT = process.env.PORT || 5000;

@@ -1,21 +1,16 @@
 const mongoose = require("mongoose");
 
-const addCompanyStockSchema = new mongoose.Schema(
+const home_stock_schema = new mongoose.Schema(
   {
-    company_id: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "Company",
-      required: true,
-    },
     date: {
       type: Date,
       required: true,
     },
-    gold_24kt: {
-      type: Number,
-      required: true,
+    add_by: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "AddCompanyStock",
     },
-    conversion_rate: {
+    gold_24kt: {
       type: Number,
       required: true,
     },
@@ -23,13 +18,12 @@ const addCompanyStockSchema = new mongoose.Schema(
       type: Number,
       required: true,
     },
-    is_cleared: {
-      type: Boolean,
-      default: false,
+    conversion_rate: {
+      type: Number,
+      required: true,
     },
     is_approved: {
-      type: Boolean,
-      default: false,
+      type: Boolean
     },
     is_deleted: {
       type: Boolean,
@@ -39,4 +33,4 @@ const addCompanyStockSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-module.exports = mongoose.model("AddCompanyStock", addCompanyStockSchema);
+module.exports = mongoose.model("homeStock", home_stock_schema);
